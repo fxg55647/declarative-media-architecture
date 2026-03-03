@@ -273,6 +273,6 @@ Characters are defined structurally, enabling authentic reactions and AI-consist
 
 Games become rule systems instead of binary archives. Worlds do not age.
 
-The path begins with modders and expands outward.
+The path is likely to begin with modding and emulation community and expands outward.
 
 ---
