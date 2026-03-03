@@ -1,29 +1,32 @@
-# OMNISTAGE & LSM – Tiivistelmä
+# OMNISTAGE & LSM – Summary
 
-## 1. YDINFILOSOFIA
+## 1. CORE PHILOSOPHY
 
-**Ongelma:** Nykymedia (video, pelit) tallentaa pikseleitä, ei merkitystä. Tämä tekee sisällöstä staattista, raskasta, formaattisidonnaista ja teknisesti vanhenevaa.
+**Problem:** Current media (video, games) stores pixels, not meaning. This makes content static, heavy, format-dependent, and technically obsolete.
 
-**Ratkaisu:** Tallennetaan logiikka (säännöt, persoonat, kausaliteetti) ja renderöidään vasta paikallisesti reaaliajassa. Teos ja sen esitys erotetaan toisistaan.
+**Solution:** Store the logic (rules, personalities, causality) and render only locally in real-time. The work and its presentation are separated.
 
-**Metafora:** Nuottikirjoitus vs. esitys. Sama partituuri voidaan soittaa pianolla, orkesterilla tai syntetisaattorilla – musiikki on sama, sointi vaihtelee.
+**Metaphor:** Sheet music vs. performance. The same score can be played on a piano, an orchestra, or a synthesizer. The music is the same, the sound varies.
 
 ---
 
-## 2. TEKNINEN ARKKITEHTUURI (Neljä kerrosta)
+## 2. TECHNICAL ARCHITECTURE (Four Layers)
 
 ### Layer 1: Rule IR (The DNA)
-**Mitä:** Deklaratiivinen graafi, joka kuvaa teoksen olemuksen.
 
-**Sisältää:**
-- Entiteetit (hahmot) ominaisuuksineen: ikä, pelkotaso, motivaatio, suhteet
-- Tilat ja siirtymät: "Jos T-1000 havaitaan, siirry tilaan pakokauhu"
-- Rajoitteet: "John Connor ei voi kuolla ennen kolmatta näytöstä"
-- Koko: muutamia megatavuja (vs. gigatavujen videostreami)
+**What:** A declarative graph describing the essence of the work.
 
-**Keskeinen oivallus:** Persoonat kuvataan eksplisiittisesti datana, ei rivien välissä.
+**Includes:**
 
-**Esimerkki:**
+- Entities (characters) with properties: age, fear level, motivation, relationships
+- States and transitions: "If T-1000 is detected, switch to state panic"
+- Constraints: "John Connor cannot die before the third act"
+- Size: a few megabytes (vs. gigabytes of video stream)
+
+**Key Insight:** Personalities are described explicitly as data, not between the lines.
+
+Example:
+
 ```yaml
 entity: "John Connor"
 personality:
@@ -31,278 +34,210 @@ personality:
   fear_response: 0.9
   loyalty_family: 0.95
 relationships:
-  mother_Sarah: { trust: 0.9, protectiveness: 0.95 }
+  mother_Sarah:
+    trust: 0.9
+    protectiveness: 0.95
 ```
 
-### Layer 2: OmniStage (Globaali lava)
-**Mitä:** Maailman fyysinen näyttämö.
+---
 
-**Teknologia:** Hyödyntää Overture Maps Foundationin avointa dataa ja GERS-tunnisteita (Microsoft, Meta, Amazon, TomTom).
+### Layer 2: OmniStage (The Global Stage)
 
-**Miksi:** Ei tarvitse rakentaa jokaista ympäristöä alusta – maailman kaupungit, kadut, rakennukset ovat jo valmiina standardina.
+**What:** The physical stage of the world.
 
-**Toiminta:** Rule IR viittaa paikkoihin GERS-tunnisteilla (`location: gers:building_12345`), jolloin tarina voidaan sijoittaa mihin tahansa fyysiseen paikkaan.
+**Technology:** Utilizes open data from the Overture Maps Foundation and GERS identifiers.
 
-### Layer 3: Engine Adapter (Toteuttaja)
-**Mitä:** Paikallinen moottori (Unity, Unreal, tai AI-renderöijä), joka tulkitsee Rule IR:n ja piirtää ruudulle.
+**Why:** No need to build every environment from scratch. The world's cities, streets, buildings are already available as a standard.
 
-**Skaalautuvuus:** Sama Rule IR voidaan renderöidä:
-- Retrografiikkana vanhalla kännykällä
-- Fotorealistisena huippupelitietokoneella
-- Minimalistisena värillisinä palloina (testausmoodi)
+**Function:** Rule IR refers to locations using GERS identifiers:
 
-**Tarkkuuskerrokset (Layer of Fidelity):**
-1. Semanttinen ydin (hahmo A on vihainen)
-2. Vektoritaso (sijainti ja suunta)
-3. Luurankotaso (nivelten asennot)
-4. Fysiikkataso (massa, painovoima, vaatteet)
-5. Geometrinen taso (visuaalinen muoto)
-6. Materiaalitaso (pinnat, valon käyttäytyminen)
-7. Fotorealistinen taso (AI-generoitu pinta)
-8. Metataso (syke, hengitys, pupillit – emotionaalinen tarkkuus)
-
-### Layer 4: Deterministic Kernel (Fysiikka)
-**Mitä:** Täsmällinen ydin, joka varmistaa, että logiikka ja fysiikka toimivat identtisesti kaikilla laitteilla.
-
-**Miksi tärkeä:**
-- Mahdollistaa jaetut kokemukset (moninpeli, yhteiset "muistot")
-- Takaa että "chaos injection" tuottaa saman lopputuloksen kaikille
-- Teknisesti haastava mutta ratkaistavissa (deterministinen fysiikkamoottori, kiinteän pilkun matematiikka)
+```
+location: gers:building_12345
+```
 
 ---
 
-## 3. TEKNOLOGIAN NIMET
+### Layer 3: Engine Adapter (The Executor)
 
-- **OmniStage:** Kattobrändi, koko konsepti. "Omni" (kaikkialla) + "Stage" (lava, jolla esitys tapahtuu)
-- **LSM (Logic Stream Model):** Tekninen protokolla, tiedostomuoto. Korvaa nykyiset videotiedostot (.mp4) ja pelitiedostot (.exe). Kevyt, striimattava logiikkapaketti.
+**What:** A local engine (Unity, Unreal, or AI renderer) that interprets the Rule IR and draws it on screen.
+
+**Scalability:** The same Rule IR can be rendered as:
+
+- Retro graphics on an old phone
+- Photorealistic on a high-end gaming PC
+- Minimalist colored shapes (testing mode)
+
+**Layers of Fidelity:**
+
+- Semantic core (character A is angry)
+- Vector level (position and direction)
+- Skeleton level (joint positions)
+- Physics level (mass, gravity, clothing)
+- Geometric level (visual shape)
+- Material level (surfaces, light behavior)
+- Photorealistic level (AI-generated surface)
+- Meta level (heartbeat, breathing, pupils)
 
 ---
 
-## 4. VALLANKUMOUS SISÄLLÖSSÄ
+### Layer 4: Deterministic Kernel (Physics)
 
-### Sandbox-elokuvat ("Leikkiminen leffoilla")
-Elokuva ei ole lineaarinen tallenne vaan simulaatio, johon voi astua sisään:
-- Pysäytä kohtaus, tutki tiloja, joita kamera ei näyttänyt
-- Keskustele hahmojen kanssa (heidän persoonansa ohjaa vastauksia)
-- Astu ulos ja anna tarinan jatkua
+**What:** A precise core ensuring that logic and physics function identically on all devices.
+
+**Why it matters:**
+
+- Enables shared experiences
+- Guarantees identical outcomes
+- Enables multiplayer consistency
+
+---
+
+## 3. TECHNOLOGY NAMES
+
+- **OmniStage:** The umbrella concept
+- **LSM (Logic Stream Model):** The file format and protocol
+- **Rule IR:** The rule description language
+
+---
+
+## 4. THE REVOLUTION IN CONTENT
+
+### Sandbox Movies
+
+A movie becomes a simulation:
+
+- Pause and explore unseen spaces
+- Talk to characters
+- Let the story continue dynamically
 
 ### Chaos Injection
-Käyttäjä voi tuoda entiteettejä toisista teoksista ja katsoa mitä tapahtuu:
-- T-Rex Hitlerin bunkkeriin (miten natsit reagoivat?)
-- Predator The Exorcistiin (miten demoni kohtaa metsästäjän?)
-- Alien The Officeen (miten Jim ja Dwight reagoivat?)
 
-Koska hahmoilla on Rule IR:ssä määritellyt persoonat ja käytöslogiikat, kohtaaminen on aito simulaatio, ei käsikirjoitettu sketsi.
+Bring entities from other works and simulate outcomes.
 
-### Remix-kulttuuri ja modaus
-- Elokuvat ovat "forkattavia" (kuten GitHub)
-- Vaihda loppu, muuta hahmon motivaatiota, siirrä tapahtumapaikka omaan kotikatuusi
-- Style-paketit: katso T2 anime-tyylillä, realistisena tai Ghibli-estetiikalla
+Because personalities are defined structurally, encounters are simulations, not scripted scenes.
 
-### Interaktiivisuus liukuvasti
-Katsoja voi liukua passiivisen katsojan ja aktiivisen osallistujan välillä lennossa. Kamera siirtyy ohjaajan kädestä pelaajan hallintaan saumattomasti.
+### Remix Culture
 
----
+- Fork stories
+- Change motivations
+- Move the setting
+- Apply style packs
 
-## 5. TEKNISET MAHDOLLISTAJAT
+### Gradual Interactivity
 
-### Miksi juuri nyt?
-1. AI on tarpeeksi hyvä toteuttamaan kun sille annetaan tarkat ohjeet
-2. Laskentateho on halpaa (reaaliaikainen renderöinti kuluttajalaitteilla)
-3. Standardit olemassa (Overture Maps, GERS)
-4. Yleisö valmis (remix-kulttuuri, modausyhteisöt, fanifiktio)
-
-### AI:n rooli
-- **Toteuttaja, ei päättäjä:** AI vie Rule IR:n päätökset aistittavaan muotoon (kuten näyttelijä tulkitsee ohjaajan ohjeita)
-- **Video-to-3D -rekonstruktio:** AI purkaa vanhat videot Rule IR:ksi ja 3D-ympäristöiksi
-- **AI-Tuomari:** Valvoo rekonstruktion laatua ja uskollisuutta alkuperäiselle
-
-### AI ja rakenteellisuus
-Kun sisältö on rakenteellista (Rule IR), AI pystyy generoimaan uutta sisältöä laadukkaammin ja johdonmukaisemmin. AI ei arvaa "miltä John Connor näyttää" vaan tietää hänen ikänsä, pelkotasonsa ja motivaationsa. Tämä mahdollistaa:
-- Uusien kohtausten generoinnin, jotka ovat täysin yhteensopivia alkuperäisen hahmon kanssa
-- Vaihtoehtoisten tarinahaarukoiden luomisen ilman käsikirjoittajan jokaista repliikkiä
-- Hahmojen käytöksen skaalaamisen eri tilanteisiin ilman että ne muuttuvat epäuskottaviksi
-
-Rakenne on se, mikä tekee AI:sta käyttökelpoisen ammattimaiseen sisällöntuotantoon.
+The viewer moves between passive watching and active control.
 
 ---
 
-## 6. MITÄ TÄMÄ MERKITSISI PELAAMISELLE
+## 5. AI'S ROLE
 
-### Peli logiikkana, ei binääriarkkuna
-Nykyään peli on suljettu paketti, joka sisältää:
-- kartat
-- skriptit
-- tekoälyn
-- fysiikan
-- renderöinnin
+- Executor, not decider
+- Video-to-3D reconstruction
+- AI referee for quality control
 
-Kaikki on sidottu yhteen moottoriin, yhteen versioon, yhteen aikaan.
-
-OmniStage-ajattelussa peli jakautuu:
-- LSM = pelin merkitys (säännöt, persoonat, maailman logiikka)
-- Engine Adapter = pelin esitys (renderöinti, tyyli)
-
-Tämä tarkoittaa, että peliä ei tarvitse remasteroida – se voidaan renderöidä uudelleen millä tahansa tulevaisuuden teknologialla.
-
-### Peli suunnitellaan tulevaisuutta varten
-Kun uusi peli tehdään LSM-pohjaisena, sen mukana syntyy:
-- eksplisiittinen maailmamalli
-- entiteettien käytöslogiikka
-- karttaviitteet standardiformaatissa
-- siirrettävä sääntökerros
-
-10 vuoden päästä peli voidaan renderöidä uudelleen ilman remasterointia. Modaajat voivat muuttaa pelin käyttäytymistä rikkomatta moottoria. Porttaus ei ole uudelleenkirjoitus vaan adapterin vaihto.
-
-### Pelaajasta tulee sääntöjen muokkaaja
-Nykyään modaaja muokkaa tekstuureja, assetteja ja skriptejä. LSM-maailmassa modaaja muokkaa:
-- persoonaparametreja
-- tilasiirtymiä
-- kausaalisuhteita
-
-Pelaaja voi forkata pelin kuten GitHub-repon, julkaista oman versionsa maailmasta ja rakentaa "virallisen epävirallisen" jatko-osan.
-
-### Peli ja elokuva sulautuvat
-Kun narratiivinen peli tallennetaan logiikkana:
-- siitä voidaan tehdä elokuvamainen renderöinti
-- siitä voidaan tehdä sandbox-versio
-- siitä voidaan tehdä interaktiivinen sarja
-
-Ja toisin päin: elokuvasta voi tulla pelattava simulaatio. Raja ei enää kulje "lineaarinen vs interaktiivinen" vaan "katsotko vai vaikutatko juuri nyt". Se on liukusäädin, ei kytkin.
-
-### Pelien jakelu muuttuu
-Tulevaisuuden pelipaketti voi olla:
-- 80 MB LSM-logiikkaa
-- valinnainen tyyli- ja renderöintipaketti
-
-Pelin lataaminen ei ole 120 gigatavun operaatio vaan sääntökirjan hakeminen. Renderöinti tapahtuu paikallisesti. Pilvipelaaminen muuttuu: ei enää streamata pikseleitä, vaan jaetaan deterministinen simulaatiotila.
-
-### Ristiinpelattavat maailmat
-Jos pelit käyttävät yhteensopivaa Rule IR -rakennetta:
-- hahmot voivat siirtyä pelistä toiseen
-- fysiikka voi olla yhteensopivaa
-- maailmat voivat limittyä
-
-Fantasiaroolipelin hahmo voi astua moderniin kaupunkisimulaatioon ja käyttäytyä edelleen oman persoonamallinsa mukaisesti. Tämä ei ole crossover vaan ontologinen yhteensopivuus.
-
-### Uusi suunnittelufilosofia
-Peleissä korostuu systeemisyys, emergenssi ja eksplisiittinen käyttäytymismalli. Scriptatut tapahtumat vähenevät, tilakoneet ja säännöt lisääntyvät.
-
-Tämä ei sovi kaikkeen – kilpailulliset e-urheilupelit tarvitsevat tiukan kontrollin ja suljetun determinismin. Mutta narratiivisille peleille, simulaatioille, strategiapeleille, roolipeleille ja opetuspohjaisille peleille tämä on luonnollinen evoluutio.
-
-### Uusi ammattirooli: Pelin ontologi
-Koodarin ja käsikirjoittajan väliin syntyy rooli: maailma-arkkitehti. Hän ei rakenna grafiikkaa eikä kirjoita dialogia. Hän määrittää:
-- mitä on olemassa
-- miten se reagoi
-- mikä on mahdollista
-- mikä on mahdotonta
-
-Se on enemmän fysiikan ja psykologian suunnittelua kuin skriptinkirjoitusta.
-
-### Peli ei kuole julkaisupäivänä
-Tällä hetkellä moottori vanhenee, API muuttuu, käyttöjärjestelmä rikkoo yhteensopivuuden ja peli jää historiaan.
-
-LSM-maailmassa niin kauan kuin joku osaa tulkita sääntöjä, maailma elää. Remasterointi ei ole remake vaan uusi esitystapa.
-
-### Pidemmän aikavälin seurauksia
-- Pelaajien tekemät hahmot voivat olla pysyviä identiteettejä eri peleissä
-- Pelihahmoista voi tulla "digitaalisia näyttelijöitä"
-- Fanifiktiosta voi tulla suoraan pelattavaa
-- Speedrun-kulttuuri muuttuu, koska simulaatio on analysoitavissa sääntötasolla
-- Modaus ei ole hakkerointia vaan virallinen osa arkkitehtuuria
-
-### Yksi lause pelaamisesta
-Tällä hetkellä peli on ohjelma, joka tuottaa kokemuksen. OmniStage-ajattelussa peli on sääntökokonaisuus, joka synnyttää maailmoja. Ja maailmat eivät vanhene.
+When content is structural, AI generates consistent extensions.
 
 ---
 
-## 7. STRATEGINEN POLKU: PELIYHTEISÖSTÄ ALAS
+## 6. WHAT THIS MEANS FOR GAMING
 
-### Miksi peliyhteisö on oikea aloituspiste
-- Modaajat ajattelevat jo entiteeteissä ja käytöksessä
-- He kärsivät nykyisestä pirstaleisuudesta (joutuvat koodaamaan saman logiikan uudelleen joka peliin)
-- He sietävät keskeneräisiä työkaluja ja antavat palautetta
-- He levittävät orgaanisesti
+### A Game as Logic
 
-### MVP (Proof of Concept): "Park Run"
-- Yksinkertainen jahtaaja-pakenija -leikki puistossa
-- Rule IR: kaksi hahmoa, muutama tila
-- OmniStage: haetaan Overturesta oikea puisto
-- Engine Adapter: kolme eri tyyliä (retro, realistinen, minimalistinen)
-- Deterministic Kernel: jahtaajan liikerata ennustettavissa
+Instead of a closed binary archive:
 
-### Asteittainen käyttöönotto
-Ensimmäinen askel voisi olla yhteinen karttaformaatti. Jos useampi peli käyttäisi samaa karttastandardia (Overture Maps), modit siirtyisivät pelistä toiseen, ympäristöt olisivat jaettavia ja pelaajan luoma maailma ei kuolisi pelin mukana. Tämä on matalan riskin sisäänajo.
+- LSM = rules and meaning
+- Engine Adapter = presentation
 
-### Rahoitusmalli
-- Freemium-työkalut (Rule IR -editori ilmainen)
-- Marketplace modaajien tekemille hahmoprofiileille
-- Studio-lisenssit (kun halutaan virallista IP:tä)
-- Crowdfunding spesifeille skannauksille
+No remaster needed. Only re-rendering.
 
----
+### Player as Rule Modifier
 
-## 8. YHTEISKUNNALLINEN MERKITYS
+Modders modify:
 
-### Ekologisuus
-- LSM-paketti: ~50 MB (2h elokuva)
-- 4K-videostream: ~7 GB (sama sisältö)
-- Dataliikenteen vähennys jopa 140-kertainen
-- Vähentää runkoverkkojen ja tukiasemien energiankulutusta radikaalisti
-- Käyttäjä voi valita "Eco-moodin" (matalampi resoluutio, vähemmän sähköä)
+- Personality parameters
+- State transitions
+- Causal relationships
 
-### Kehitysmaat
-- Koululainen Kenian maaseudulla voi ladata 5 Mt LSM-paketin
-- Hän voi kokea interaktiivisen oppimisympäristön 4K-laadulla (jos laite pystyy renderöimään)
-- Tämä on sisällön demokratisointia syvimmällä mahdollisella tasolla
+Games become forkable worlds.
 
-### Ikuinen formaatti
-Rule IR ei vanhene teknisesti. Vuonna 2045 sama LSM-paketti renderöityy hologrammina tai tulevaisuuden teknologialla – alkuperäistä uskollisena.
+### Game and Film Merge
+
+The boundary between linear and interactive becomes adjustable.
 
 ---
 
-## 9. KÄSIKIRJOITTAMISEN TULEVAISUUS
+## 7. STRATEGIC PATH
 
-### Persoonat eksplisiittisiksi
-Käsikirjoittaja ei kirjoita enää pelkkää dialogia vaan hahmon psykologisen profiilin:
-- Peruspiirteet (rohkeus, pelkoreaktio, sopeutuvuus)
-- Tunnetilat ja niiden triggerit
-- Suhteet muihin hahmoihin (luottamus, suojeluhalu)
-- Puhetyylit eri tilanteissa
+### Start with Gaming Community
 
-### Reaktiivinen käsikirjoitus
-Lineaarisen "A→B→C" sijaan kirjoitetaan tiloja ja siirtymiä:
+- Modders understand entities and rules
+- They tolerate early tools
+- They spread ideas organically
+
+### MVP: "Park Run"
+
+- Two characters
+- Real park via open map data
+- Three rendering styles
+- Deterministic chase
+
+---
+
+## 8. SOCIAL SIGNIFICANCE
+
+### Ecological
+
+- LSM package: ~50 MB
+- 4K video: ~7 GB
+- Massive reduction in data transfer
+
+### Democratization
+
+Lightweight downloads enable global access.
+
+### Eternal Format
+
+Rule IR does not age. Rendering technology evolves independently.
+
+---
+
+## 9. FUTURE OF SCREENWRITING
+
+### Explicit Personalities
+
+Writers define:
+
+- Traits
+- Emotional triggers
+- Relationships
+- Speech styles
+
+### Reactive Writing Example
 
 ```yaml
-state: "John_näkee_T1000"
-on_entry: ["aseta tunnetila: kauhu", "etsi pakoreittejä"]
+state: "John_sees_T1000"
+on_entry:
+  - "set_emotion: terror"
+  - "find_escape_routes"
 transitions:
-  - if: "pakoreitti_löytyi" -> "juoksu"
-  - if: "äiti_vaarassa" -> "suojele_äitiä"
+  - if: "escape_route_found"
+    then: "running"
+  - if: "mother_in_danger"
+    then: "protect_mother"
 ```
 
-### Uusi ammattitaito: Persoona-arkkitehti
-Käsikirjoittajat ymmärtävät miten piirteet vuorovaikuttavat ja miten ne ilmenevät eri tilanteissa.
+---
+
+## 10. PRODUCTION MODEL
+
+LSM becomes a byproduct of normal production workflows.
+
+AI can reconstruct structure from existing media.
 
 ---
 
-## 10. TUOTANNON NÄKÖKULMA: SIVUTUOTE, EI LISÄTYÖ
+## 11. LSM PRELIMINARY SCHEMA
 
-Kun infrastruktuuri on valmis, LSM-pakettien tuottaminen ei ole lisätyötä vaan **nykyisten työvaiheiden luonnollinen sivutuote**.
-
-Nykytuotannossa hahmot, säännöt ja maailman logiikka jo **suunnitellaan** tarkasti – ne vain eivät tallennu koneluettavaan muotoon. Käsikirjoitukset sisältävät persoonakuvaukset, pelisuunnitteludokumentit sisältävät käytöslogiikat, tuotantokokouksissa päätetään hahmojen motivaatiot.
-
-OmniStage-ympäristössä nämä suunnitelmat kirjattaisiin suoraan Rule IR -muotoon samalla kun niistä keskustellaan. Se on kuin kirjoittaisi käsikirjoituksen valmiiksi yhteensopivaan formaattiin – ei ylimääräinen vaihe vaan **tapa tehdä se mitä jo tehdään, mutta tallentaen se uudelleenkäytettävästi**.
-
-Lisäksi olemassa olevasta materiaalista (videot, pelit) voidaan AI-rekonstruktion avulla tuottaa LSM-paketteja jälkikäteen. Tämä ei vaadi alkuperäisten tekijöiden lisätyötä – AI purkaa valmiista sisällöstä rakenteen, jonka ihminen tarkistaa ja hyväksyy.
-
-Infrastruktuurin ollessa paikallaan LSM syntyy itsestään, koska se on **tehokkain tapa hallita monimutkaisia tuotantoja**.
-
----
-
-## 11. TEKNISET YKSITYISKOHDAT (LSM-standardi)
-
-### Alustava skeema (YAML)
 ```yaml
 entity: "John Connor"
 properties:
@@ -320,51 +255,24 @@ states:
     on_enter: "set_animation('sprint')"
 ```
 
-Tärkeää: Ihmisen luettavissa, koneen suoritettavissa.
+Human-readable. Machine-executable.
 
 ---
 
-## 12. KESKEISET TERMIT
+## 12. ONE SENTENCE SUMMARY
 
-| Termi | Selitys |
-|-------|---------|
-| Rule IR | Hahmojen, sääntöjen ja logiikan kuvauskieli |
-| LSM | Logic Stream Model, tiedostomuoto (protokolla) |
-| OmniStage | Koko konsepti, "brändi" |
-| Overture Maps | Avoin karttadata (rakennukset, kadut, paikat) |
-| GERS | Global Entity Reference System (Overture-tunnisteet) |
-| Engine Adapter | Paikallinen moottori joka renderöi |
-| Deterministic Kernel | Takaa saman lopputuloksen kaikilla laitteilla |
-| Chaos Injection | Tuo entiteettejä toisista teoksista |
-| AI-Tuomari | Valvoo rekonstruktion laatua |
-| Pelin ontologi | Maailma-arkkitehti, joka määrittää pelin säännöt ja käytösmallit |
+"The entertainment industry has recorded reflections of light. OmniStage records meaning."
 
 ---
 
-## 13. YKSI LAUSE, JOKA TIIVISTÄÄ KAIKEN
+## CLIFF'S NOTES
 
-"Viihdeteollisuus on tähän asti tallentanut valon heijastumia. OmniStage tallentaa merkityksen."
+OmniStage replaces pixel-based media with lightweight logic packages (LSM) rendered locally.
 
----
+Characters are defined structurally, enabling authentic reactions and AI-consistent expansion.
 
-## 14. NYT KUN TIEDÄT TÄMÄN
+Games become rule systems instead of binary archives. Worlds do not age.
 
-Tämä konsepti odottaa:
-1. LSM-standardin luonnostelua (YAML/JSON-pohja)
-2. Proof of Concept -demoa (Park Run tai vastaava)
-3. Yhteisön rakentamista (modaajat, kouluttajat, dokumentaristit)
-4. Standardointiprosessia (Open Source, myöhemmin W3C tai OGC)
-
-Tärkeintä: tee työkalu jota tekijät rakastavat, älä tuote jota studioille myydään. Jos tekijät vaativat sitä, studiot seuraavat.
+The path begins with modders and expands outward.
 
 ---
-
-## CLIFF'S NOTES -VERSIO
-
-OmniStage on median uusi käyttöjärjestelmä. Se korvaa videot ja perinteiset pelit kevyillä logiikkapaketeilla (LSM), jotka renderöidään paikallisesti. Hahmojen persoonat kuvataan tarkasti datana, joten ne voivat reagoida aidosti mihin tahansa tilanteeseen – myös katsojan tuomiin uusiin elementteihin.
-
-Kun infrastruktuuri on valmis, LSM-paketit syntyvät lähes itsestään nykytuotantojen sivutuotteena, koska hahmojen ja maailman logiikka jo suunnitellaan tarkasti – se vain ei ole ollut koneluettavaa. AI puolestaan pystyy tämän rakenteellisuuden ansiosta generoimaan uutta sisältöä laadukkaasti ja johdonmukaisesti.
-
-Teknologia mahdollistaa sandbox-elokuvat, remix-kulttuurin, valtavat energiansäästöt ja sisällön demokratisoinnin. Pelit muuttuvat suljetuista binääriarkuista eläviksi sääntökokonaisuuksiksi, jotka eivät vanhene. Pelaajasta tulee maailman muokkaaja, ja uusi ammattirooli – pelin ontologi – syntyy koodarin ja käsikirjoittajan väliin.
-
-Polku alkaa peliyhteisöstä, jossa modaajat ymmärtävät ongelman ja ratkaisun arvon. Sieltä se voi levitä koko viihdeteollisuuteen.
